@@ -22,7 +22,7 @@ options {
 
         stage('Checkout repo dir') {
             steps {
-                sh 'cd mle-template && dir'
+                sh 'cd BigDataLab1 && dir'
 				}
 			}
 
@@ -39,12 +39,12 @@ options {
             steps {
                 script {
                     try {
-                        sh 'cd mle-template && docker compose build'
+                        sh 'cd BigDataLab1 && docker compose build'
                         }
 
                     finally {
                     sh '''
-                        cd mle-template
+                        cd BigDataLab1
                         docker compose up -d
                         '''
                         }
