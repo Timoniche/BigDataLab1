@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDS=credentials('mle-template')
-        LC_ALL = "en_US.UTF-8"
-        LANG    = "en_US.UTF-8"
+        LC_ALL   = "en_US.UTF-8"
+        LANG     = "en_US.UTF-8"
         LANGUAGE = "en_US.UTF-8"
     }
 
@@ -17,46 +17,34 @@ options {
             steps {
                 cleanWs()
                 sh 'git clone -b main https://github.com/Timoniche/BigDataLab1.git'
-				}
 			}
+		}
 
         stage('Checkout repo dir') {
             steps {
                 sh 'cd BigDataLab1 && dir'
-				}
 			}
+	    }
 
-        stage('Login'){
-            steps{
+        stage('Login') {
+            steps {
                 //withCredentials([usernamePassword(credentialsId: 'mle-template', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]){
                 //sh 'echo $DOCKER_REGISTRY_PWD | docker login -u $DOCKER_REGISTRY_USER --password-stdin'}
                 //sh 'echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin'
                 sh 'docker login -u $DOCKERHUB_CREDS_USR -p $DOCKERHUB_CREDS_PSW'
-                }
             }
+        }
 
+        stage('Building docker') {
+            steps {
+                sh 'cd BigDataLab1 && docker compose build'
+            }
+        }
         stage('Create and run docker container') {
             steps {
-                script {
-                    try {
-                        sh '''
-                            su -
-                            apt-get update
-                            apt-get install sudo
-                        '''
-                        sh 'sudo dockerd'
-                        sh 'cd BigDataLab1 && docker compose build'
-                        }
-
-                    finally {
-                    sh '''
-                        cd BigDataLab1
-                        docker compose up -d
-                        '''
-                        }
-				    }
-                }
+                sh 'cd BigDataLab1 && docker compose up -d'
             }
+        }
 
         // use for multi containers:
         //docker exec %containerId% cd app && coverage run src/unit_tests/test_preprocess.py && coverage run -a src/unit_tests/test_training.py && coverage report -m
@@ -81,18 +69,18 @@ options {
             }
         } */
 
-        stage('Checkout coverage report'){
+        stage('Checkout coverage report') {
             steps{
-                dir("mle-template"){
+                dir("mle-template") {
                     sh '''
-                    docker compose logs -t --tail 10
+                        docker compose logs -t --tail 10
                     '''
                 }
             }
         }
 
-        stage('Push'){
-            steps{
+        stage('Push') {
+            steps {
                 sh 'docker push ddulaev/mle-template:latest'
             }
         }
