@@ -1,3 +1,4 @@
+# building jenkins official image, installing docker, giving access to user jenkins build dockers
 FROM jenkins/jenkins:lts
 USER root
 RUN apt-get update -qq \

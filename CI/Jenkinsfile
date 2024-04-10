@@ -39,6 +39,7 @@ options {
             steps {
                 script {
                     try {
+                        sh 'sudo dockerd'
                         sh 'cd BigDataLab1 && docker compose build'
                         }
 
