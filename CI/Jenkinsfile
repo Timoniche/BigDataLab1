@@ -28,9 +28,6 @@ options {
 
         stage('Login') {
             steps {
-                //withCredentials([usernamePassword(credentialsId: 'mle-template', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]){
-                //sh 'echo $DOCKER_REGISTRY_PWD | docker login -u $DOCKER_REGISTRY_USER --password-stdin'}
-                //sh 'echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin'
                 sh 'docker login -u $DOCKERHUB_CREDS_USR -p $DOCKERHUB_CREDS_PSW'
             }
         }
@@ -46,35 +43,10 @@ options {
             }
         }
 
-        // use for multi containers:
-        //docker exec %containerId% cd app && coverage run src/unit_tests/test_preprocess.py && coverage run -a src/unit_tests/test_training.py && coverage report -m
-        //use for single container (with auth):
-        //docker run --name mle-template_web_1 cd app && coverage run src/unit_tests/test_preprocess.py && coverage run -a src/unit_tests/test_training.py && coverage report -m
-
-        /* stage('Checkout container logs') {
-            steps {
-                dir("mle-template") {
-                        sh '''
-                            docker-compose up -d
-                            for /f %%i in ('docker ps -qf "name=^mle-template-web-1"') do set containerId=%%i
-                            echo %containerId%
-                            IF "%containerId%" == "" (
-                                echo "No container running"
-                            )
-                            ELSE (
-                                docker logs --tail 1000 -f %containerId%
-                                )
-                        '''
-                    }
-            }
-        } */
-
         stage('Checkout coverage report') {
             steps{
                 dir("BigDataLab1") {
-                    sh '''
-                        docker compose logs -t --tail 10
-                    '''
+                    sh 'docker compose logs -t --tail 10'
                 }
             }
         }
