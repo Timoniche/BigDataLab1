@@ -132,3 +132,5 @@ dmypy.json
 
 # Place data for non local DVC
 # /data 
+/celeba/img_align_celeba/
+/celeba_dataset/data/
