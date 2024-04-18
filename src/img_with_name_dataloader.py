@@ -5,6 +5,7 @@ from torchvision import transforms
 from images_dataset import ImagesDataset, IMAGE_SIZE
 from utils.common_utils import parent_dir
 
+
 def prepare_celeba_dataloader_with_names(img_to_male, batch_size):
     transform = transforms.Compose([
         transforms.Resize(IMAGE_SIZE),

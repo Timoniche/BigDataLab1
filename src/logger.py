@@ -2,11 +2,11 @@ import logging
 import os
 import sys
 
-FORMATTER = logging.Formatter(
-    "%(asctime)s — %(name)s — %(levelname)s — %(message)s")
+FORMATTER = logging.Formatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s")
 LOG_FILE = os.path.join(os.getcwd(), "logfile.log")
 
 
+# noinspection PyMethodMayBeStatic
 class Logger:
     """
         Class for logging behaviour of data exporting - object of ExportingTool class
