@@ -1,24 +1,42 @@
 import io
+import pickle
 
+import cv2
+import numpy as np
 import uvicorn
 from PIL import Image
 
 from fastapi import FastAPI, UploadFile, File
 
-from img_with_name_dataloader import transform
+from images_dataset import IMAGE_SIZE, extract_hog_features
 
 app = FastAPI()
 
+with open('./../experiments/random_forest_pretrained.pkl', 'rb') as f:
+    rf_classifier = pickle.load(f)
+
+
+
+def extract_hog_embs(pil_image):
+    img = np.array(pil_image)
+    img_resized = cv2.resize(img, (IMAGE_SIZE, IMAGE_SIZE))
+    img_gray = cv2.cvtColor(img_resized, cv2.COLOR_BGR2GRAY)
+    hog_features = extract_hog_features(img_gray)
+
+    return hog_features
 
 @app.post('/upload/')
 async def upload_file(file: UploadFile = File(...)):
     image = await file.read()
-    image = Image.open(io.BytesIO(image))
-    image = image.convert('RGB')
-    image = transform(image)
+    image = Image.open(io.BytesIO(image)).convert('RGB')
+
+    hog_embs = extract_hog_embs(image)
+
+    is_male = rf_classifier.predict([hog_embs])
 
     return {
-        'filename': file.filename
+        'filename': file.filename,
+        'is_male': 'male' if is_male else 'female',
     }
 
 
