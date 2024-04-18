@@ -1,13 +1,25 @@
-import uvicorn
+import io
 
-from fastapi import FastAPI
+import uvicorn
+from PIL import Image
+
+from fastapi import FastAPI, UploadFile, File
+
+from img_with_name_dataloader import transform
 
 app = FastAPI()
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str = None):
-    return {"item_id": item_id, "q": q}
+@app.post('/upload/')
+async def upload_file(file: UploadFile = File(...)):
+    image = await file.read()
+    image = Image.open(io.BytesIO(image))
+    image = image.convert('RGB')
+    image = transform(image)
+
+    return {
+        'filename': file.filename
+    }
 
 
 def main():
