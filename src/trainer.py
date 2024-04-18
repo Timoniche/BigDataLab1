@@ -61,7 +61,7 @@ def main():
     train(
         dataloader,
         n_samples,
-        classifier_save_path='./random_forest_pretrained.pkl'
+        classifier_save_path='./../experiments/random_forest_pretrained.pkl'
     )
 
 
