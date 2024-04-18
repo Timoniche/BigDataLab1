@@ -43,9 +43,9 @@ class ImagesDataset(Dataset):
         self.n_samples = len(self.imgs_paths)
         self.transform = transform
 
-    def __load_imgs_paths(self, dir):
-        imgs_paths = [os.path.join(dir, filename) for filename in os.listdir(dir) if
-                      os.path.isfile(os.path.join(dir, filename))]
+    def __load_imgs_paths(self, dir_from):
+        imgs_paths = [os.path.join(dir_from, filename) for filename in os.listdir(dir_from) if
+                      os.path.isfile(os.path.join(dir_from, filename))]
         imgs_paths = list(filter(lambda s: s.endswith('.jpg'), imgs_paths))
         imgs_paths = list(filter(lambda s: os.path.basename(s) in self.img_to_male, imgs_paths))
         return imgs_paths

@@ -12,6 +12,7 @@ transform = transforms.Compose([
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
 ])
 
+
 def prepare_celeba_dataloader_with_names(img_to_male, batch_size):
     imgs_path = parent_dir() + '/celeba_dataset/data/img_align_celeba'
     dataset = ImagesDataset(

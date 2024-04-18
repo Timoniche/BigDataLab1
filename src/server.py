@@ -16,7 +16,6 @@ with open('./../experiments/random_forest_pretrained.pkl', 'rb') as f:
     rf_classifier = pickle.load(f)
 
 
-
 def extract_hog_embs(pil_image):
     img = np.array(pil_image)
     img_resized = cv2.resize(img, (IMAGE_SIZE, IMAGE_SIZE))
@@ -24,6 +23,7 @@ def extract_hog_embs(pil_image):
     hog_features = extract_hog_features(img_gray)
 
     return hog_features
+
 
 @app.post('/upload/')
 async def upload_file(file: UploadFile = File(...)):
