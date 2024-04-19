@@ -26,15 +26,15 @@ options {
             }
         }
 
-        stage('Run container') {
-            steps{
-                sh 'docker run --rm --name mle-template -p 80:5556 -d ddulaev/mle-template:latest'
-            }
-        }
+//         stage('Run container') {
+//             steps{
+//                 sh 'docker run --name mle-template -p 80:5556 -d ddulaev/mle-template:latest'
+//             }
+//         }
 
         stage('Run functional tests') {
             steps{
-                sh 'docker run --rm --name mle-template -p 80:5556 -d ddulaev/mle-template:latest python -m src.func_test.api_test'
+                sh 'docker run --name mle-template -p 80:5556 -d ddulaev/mle-template:latest python -m src.func_test.api_test'
             }
         }
 	}
