@@ -1,2 +1,3 @@
 pip install pipreqs
-pipreqs . --ignore ".venv"
+python --version
+pipreqs --ignore ".venv",".old_venv"

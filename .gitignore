@@ -134,3 +134,4 @@ dmypy.json
 # /data 
 /celeba/img_align_celeba/
 /celeba_dataset/data/
+/.old_venv/
