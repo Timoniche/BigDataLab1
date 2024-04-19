@@ -1,26 +1,25 @@
 import pathlib
 
-from server import app
-from fastapi.testclient import TestClient
+import requests
 
 
 class FunctionalApiTest:
 
     def __init__(
             self,
-            client: TestClient,
+            # client: TestClient,
     ) -> None:
-        self.client = client
+        # self.client = client
+        pass
 
     def test_upload_photo(self):
-        images_dir = str(pathlib.Path(__file__).resolve().parent.parent.parent)
-        print(images_dir)
+        images_dir = str(pathlib.Path().resolve().parent.parent)
         img_path = images_dir + '/client_images/' + '000003.jpg'
 
         files = {
             'file': open(img_path, 'rb')
         }
-        response = self.client.post(
+        response = requests.post(
             url='http://localhost:8000/upload/',
             files=files,
         )
@@ -38,7 +37,5 @@ class FunctionalApiTest:
 
 
 if __name__ == '__main__':
-    mock_client = TestClient(app)
-    api_test = FunctionalApiTest(mock_client)
-
+    api_test = FunctionalApiTest()
     api_test.test_upload_photo()

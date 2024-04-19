@@ -9,10 +9,13 @@ from PIL import Image
 from fastapi import FastAPI, UploadFile, File
 
 from images_dataset import IMAGE_SIZE, extract_hog_features
+from utils.common_utils import cur_file_path
 
 app = FastAPI()
 
-with open('./../experiments/random_forest_pretrained.pkl', 'rb') as f:
+
+pretrained_path = str(cur_file_path().parent.parent.parent) + '/data/random_forest_pretrained.pkl'
+with open(pretrained_path, 'rb') as f:
     rf_classifier = pickle.load(f)
 
 
