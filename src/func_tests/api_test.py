@@ -1,5 +1,6 @@
 import pathlib
 
+from logger import Logger
 from server import app
 from fastapi.testclient import TestClient
 
@@ -10,6 +11,8 @@ class FunctionalApiTest:
             self,
             client: TestClient,
     ) -> None:
+        logger = Logger(show=True)
+        self.log = logger.get_logger(__name__)
         self.client = client
 
     def test_upload_photo(self):
@@ -30,11 +33,13 @@ class FunctionalApiTest:
         print(json)
 
         assert response.status_code == 200
+        self.log.info(f'Response json: {json}')
         ground_truth = '{"filename":"000003.jpg","is_male":"male"}'
 
         assert json == ground_truth, f'Expected {ground_truth}, got {json}'
 
-        print('Test passed')
+        self.log.info('Test passed')
+        # print('Test passed')
 
 
 if __name__ == '__main__':

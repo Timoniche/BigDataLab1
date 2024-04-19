@@ -7,9 +7,7 @@ class FunctionalApiTest:
 
     def __init__(
             self,
-            # client: TestClient,
     ) -> None:
-        # self.client = client
         pass
 
     def test_upload_photo(self):

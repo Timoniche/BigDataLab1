@@ -43,7 +43,7 @@ class Logger:
         file_handler.setFormatter(FORMATTER)
         return file_handler
 
-    def get_logger(self, logger_name: str):
+    def get_logger(self, logger_name: str) -> logging.Logger:
         """
             Class method which creates logger with certain name
 
