@@ -4,9 +4,9 @@ import unittest
 import pandas as pd
 import sys
 
-sys.path.insert(1, os.path.join(os.getcwd(), "src"))
+from example.train import MultiModel
 
-from train import MultiModel
+sys.path.insert(1, os.path.join(os.getcwd(), "src"))
 
 config = configparser.ConfigParser()
 config.read("config.ini")
