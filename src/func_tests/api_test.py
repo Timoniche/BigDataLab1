@@ -28,9 +28,7 @@ class FunctionalApiTest:
             files=files,
         )
 
-        print(response)
         json = response.content.decode()
-        print(json)
 
         assert response.status_code == 200
         self.log.info(f'Response json: {json}')
@@ -39,7 +37,6 @@ class FunctionalApiTest:
         assert json == ground_truth, f'Expected {ground_truth}, got {json}'
 
         self.log.info('Test passed')
-        # print('Test passed')
 
 
 if __name__ == '__main__':

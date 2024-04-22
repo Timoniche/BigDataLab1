@@ -3,6 +3,7 @@ import pathlib
 import requests
 
 
+# noinspection PyMethodMayBeStatic
 class FunctionalApiTest:
 
     def __init__(
